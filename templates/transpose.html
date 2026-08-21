@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Step 4 of 4 &mdash; Repack for HPLC/SOA?</h2>
+
+{% if override_note %}
+<p class="warn">{{ override_note }}</p>
+{% endif %}
+
+<p>
+  Source format confirmed as <strong>{{ src_fmt }}-well</strong>. Generate a second file
+  repacking these samples onto an analysis plate for downstream work (e.g. HPLC/SOA)?
+  All source destination plates are pooled into one continuous run before repacking.
+</p>
+
+<form action="{{ url_for('transpose_submit') }}" method="post">
+  <div class="radio-row">
+    <label><input type="radio" name="transpose_to" value="none" checked> Skip &mdash; just give me the main output</label>
+    <label><input type="radio" name="transpose_to" value="{{ other_fmt }}"> Repack to {{ other_fmt }}-well (typical choice)</label>
+    <label><input type="radio" name="transpose_to" value="{{ src_fmt }}"> Repack to {{ src_fmt }}-well</label>
+  </div>
+  <button type="submit">Generate output(s)</button>
+</form>
+{% endblock %}

@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}AMBR Plate Mapping{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>AMBR Plate Mapping</h1>
+      <p class="subtitle">BRIGHT-Biofoundry &mdash; sampling scheme &amp; HPLC/SOA repacking tool</p>
+    </header>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="flash">
+          {% for m in messages %}<p>{{ m }}</p>{% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+      <p>Nothing you upload is shared between visitors; files are processed per-session and are not retained
+        long-term on the server.</p>
+    </footer>
+  </div>
+</body>
+</html>

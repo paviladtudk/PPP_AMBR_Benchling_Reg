@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Step 1 of 4 &mdash; Upload files</h2>
+<form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
+  <label>
+    AMBR timepoints .csv <span class="req">(required)</span>
+    <input type="file" name="timepoints" accept=".csv" required>
+  </label>
+
+  <label>
+    Benchling Timepoint-Sample .csv <span class="req">(required)</span>
+    <input type="file" name="benchling_template" accept=".csv" required>
+  </label>
+
+  <label>
+    Sampling scheme .xlsx <span class="opt">(optional &mdash; omit and one will be
+    auto-generated chronologically: S00, S01, S02, ...)</span>
+    <input type="file" name="scheme" accept=".xlsx">
+  </label>
+
+  <button type="submit">Continue</button>
+</form>
+{% endblock %}

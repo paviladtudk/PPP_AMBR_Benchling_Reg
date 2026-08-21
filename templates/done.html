@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Done</h2>
+
+<ul class="summary">
+  <li>Experiment: <strong>{{ experiment_name }}</strong></li>
+  <li>Total kept sampling events: {{ total_rows }}</li>
+  <li>Dropped rows (excluded text/volume or unparsable): {{ dropped_count }}</li>
+  {% if scheme_source == "auto" %}
+  <li>Scheme was auto-generated from chronological order &mdash; every sample counts as in-scheme by definition.</li>
+  {% else %}
+  <li>Events not found in the supplied sampling scheme (still included, flagged): {{ not_in_scheme }}</li>
+  <li>Scheme slots never used by any AMBR event: {{ unused_count }}</li>
+  {% endif %}
+</ul>
+
+<div class="downloads">
+  <a class="button" href="{{ url_for('download_output') }}">Download plate_mapping_output.xlsx</a>
+
+  {% if has_generated_scheme %}
+  <a class="button secondary" href="{{ url_for('download_scheme') }}">Download auto-generated sampling_scheme.xlsx</a>
+  {% endif %}
+
+  {% if transpose_to and transpose_to != "none" %}
+  <a class="button secondary" href="{{ url_for('download_transposed') }}">
+    Download HPLC/SOA repack ({{ n_dest_plates }} destination plate(s), {{ transpose_to }}-well)
+  </a>
+  {% endif %}
+</div>
+
+<p><a href="{{ url_for('index') }}">Start a new run</a></p>
+{% endblock %}

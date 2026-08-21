@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Step 2 of 4 &mdash; Exclude volumes</h2>
+<form action="{{ url_for('volumes_submit') }}" method="post">
+  {% if volumes %}
+  <p>Volumes found in this AMBR timepoints file. Check any you want to <strong>drop</strong>:</p>
+  <ul class="checklist">
+    {% for vol in volumes %}
+    <li>
+      <label>
+        <input type="checkbox" name="exclude_volume" value="{{ vol }}">
+        {{ vol }} mL &nbsp;<span class="muted">({{ counts[vol] }} row(s))</span>
+      </label>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="muted">Could not find any parsable "Sample X.XX mL to ..." rows to scan for volumes.</p>
+  {% endif %}
+
+  <label>
+    Exclude rows whose event text contains (comma-separated)
+    <input type="text" name="exclude_text" value="END SAMPLES">
+  </label>
+
+  <button type="submit">Continue</button>
+</form>
+{% endblock %}

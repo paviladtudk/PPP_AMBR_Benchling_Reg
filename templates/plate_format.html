@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Step 3 of 4 &mdash; Confirm plate format</h2>
+<p>
+  Well addresses actually used in this file are consistent with a
+  <strong>{{ detection.format }}-well</strong> layout at minimum
+  (highest well seen: {{ detection.max_row_letter }}{{ detection.max_col }}).
+</p>
+{% if detection.format == "24" %}
+<p class="muted">
+  This can't distinguish a genuine 24-well box from a 96-well box that just wasn't filled
+  past D6 &mdash; so please confirm which was actually used. If a well that's impossible on a
+  24-well plate turns up anywhere in the data, this tool will override your answer and use
+  96-well automatically, since the data proves it.
+</p>
+{% endif %}
+
+<form action="{{ url_for('plate_format_submit') }}" method="post">
+  <div class="radio-row">
+    <label><input type="radio" name="source_plate_format" value="24" {% if detection.format == "24" %}checked{% endif %}> 24-well</label>
+    <label><input type="radio" name="source_plate_format" value="96" {% if detection.format == "96" %}checked{% endif %}> 96-well</label>
+  </div>
+  <button type="submit">Continue</button>
+</form>
+{% endblock %}
